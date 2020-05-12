@@ -8,6 +8,13 @@
   opacity: 0;
   visibility: hidden;
   transform: scale(1.1);
+  /* 
+  transition-property指定哪个或哪些 CSS 属性用于过渡。只有指定的属性才会在过渡中发生动画，其它属性仍如通常那样瞬间变化。
+  transition-duration指定过渡的时长。或者为所有属性指定一个值，或者指定多个值，为每个属性指定不同的时长。
+  transition-timing-function 指定一个函数，定义属性值怎么变化
+  transition-delay指定延迟，即属性开始变化时与过渡开始发生时之间的时长
+   transition: <property> <duration> <timing-function> <delay>;
+  */
   transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
   z-index: 1;
 }
