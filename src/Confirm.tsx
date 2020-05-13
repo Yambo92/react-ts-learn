@@ -11,46 +11,75 @@ interface IProps {
   onOkClick: () => void
   onCancelClick: () => void
 }
+/* We use stateless functional component (SFC)  React.SFC to represent these type
+of components */
 
-class Confirm extends React.Component<IProps> {
-  public static defaultProps = {
-    cancelCaption: 'Cancel',
-    okCaption: 'Okay',
+const Confirm: React.SFC<IProps> = (props) => {
+  /* 
+    第一行的 console.log('Confirm rendering') 用来证明 如果不使用React.memo的时候
+    只要父组件重新渲染的时候，即使子组件接收的props不发生改变也会跟随父组件渲染。
+    If we look at the running app and the console, we'll see that a render occurs every
+time the  App component counts down. The countdown is in the  App component
+state, and a change to state means the component will be rendered again, along
+with any child components. This is why, without any optimization, our  Confirm
+component renders on each countdown */
+  console.log('Confirm rendering')
+
+  const [cancelClickCount, setCancelClickCount] = React.useState(0)
+
+  React.useEffect(() => {
+    console.log('Confirm first rendering')
+    return () => {
+      console.log('Confirm unmounted')
+    }
+  }, [])
+
+  const handleOkClick = () => {
+    props.onOkClick()
   }
 
-  private handleOkClick = () => {
-    this.props.onOkClick()
+  const handleCancelClick = () => {
+    const newCount = cancelClickCount + 1
+    setCancelClickCount(newCount)
+    if (newCount >= 2) {
+      props.onCancelClick()
+    }
   }
 
-  private handleCancelClick = () => {
-    this.props.onCancelClick()
-  }
-
-  public render() {
-    return (
-      <div className={this.props.open ? 'confirm-wrapper confirm-visible' : 'confirm-wrapper'}>
-        <div className="confirm-container">
-          <div className="confirm-title-container">
-            <span>{this.props.title}</span>
-          </div>
-          <div className="confirm-content-container">
-            <p>{this.props.content} </p>
-          </div>
-          <div className="confirm-buttons-container">
-            <button className="confirm-cancel" onClick={this.handleCancelClick}>
-              {this.props.cancelCaption}
-            </button>
-            <button className="confirm-ok" onClick={this.handleOkClick}>
-              {this.props.okCaption}
-            </button>
-          </div>
+  return (
+    <div className={props.open ? 'confirm-wrapper confirm-visible' : 'confirm-wrapper'}>
+      <div className="confirm-container">
+        <div className="confirm-title-container">
+          <span>{props.title}</span>
+        </div>
+        <div className="confirm-content-container">
+          <p>{props.content} </p>
+        </div>
+        <div className="confirm-buttons-container">
+          <button className="confirm-cancel" onClick={handleCancelClick}>
+            {cancelClickCount === 0 ? props.cancelCaption : 'Really?'}
+          </button>
+          <button className="confirm-ok" onClick={handleOkClick}>
+            {props.okCaption}
+          </button>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-export default Confirm
+Confirm.defaultProps = {
+  cancelCaption: 'Cancel',
+  okCaption: 'Okay',
+}
+/*  we wrap our component with a function called  memo from React. We then
+export this wrapper function. The  memo function then only renders the
+component if its props change */
+/* memo should be used with care, and only on components that are being rendered more than
+they need to be */
+const ConfirmMemo = React.memo(Confirm)
+
+export default ConfirmMemo
 
 /* 
 React.Component is what is called a generic class. Generic classes allow

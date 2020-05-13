@@ -117,15 +117,17 @@ update it in the  setState call */
         </header>
         <p>{this.state.confirmMessage}</p>
         {this.state.confirmVisible && <button onClick={this.handleConfirmClick}>Confirm</button>}
-        <Confirm
-          open={this.state.confirmOpen}
-          title="React and TypeScript"
-          content="Are you sure you want to learn TS"
-          cancelCaption="不可能"
-          okCaption="好好好"
-          onOkClick={this.handleOkConfirmClick}
-          onCancelClick={this.handleCancelConfirmClick}
-        />
+        {this.state.countDown > 0 && (
+          <Confirm
+            open={this.state.confirmOpen}
+            title="React and TypeScript"
+            content="Are you sure you want to learn TS"
+            cancelCaption="不可能"
+            okCaption="好好好"
+            onOkClick={this.handleOkConfirmClick}
+            onCancelClick={this.handleCancelConfirmClick}
+          />
+        )}
       </div>
     )
   }
