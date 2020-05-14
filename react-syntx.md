@@ -50,6 +50,13 @@ performance, preventing unnecessary render cycles.
  This is called
 >just before a component updates
 
+The container component is responsible for how things work,
+fetching any data from a web API and managing state. The presentational component
+is responsible for how things look. Presentational components receive data via their
+properties and also have property event handlers so that their container can manage the
+user interactions
+
+
 <!-- 
 4.1 标题
 两种形式：
