@@ -13,6 +13,8 @@ import ProductsPage from '../pages/Products/ProductsPage'
 import ProductPage from '../pages/Products/ProductPage'
 import NotFoundPage from '../pages/NotFound/NotFoundPage'
 import LoginPage from '../pages/Login/LoginPage'
+import ContactUsPage from '../pages/Contact/ContactUsPage'
+
 import Header from '../components/Header/Header'
 
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
@@ -32,6 +34,7 @@ const Routes: React.SFC<RouteComponentProps> = (props) => {
             <Redirect from="/" to="/products" exact />
             <Route path="/products" exact component={ProductsPage} />
             <Route path="/products/:id" component={ProductPage} />
+            <Route path="/contactus" component={ContactUsPage} />
             <Route path="/admin">
               {loggedIn ? (
                 <Suspense fallback={<div className="page-container">Loading...</div>}>

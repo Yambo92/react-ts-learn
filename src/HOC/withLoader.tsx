@@ -35,6 +35,8 @@ const withLoader = <P extends object>(
 
 export default withLoader
 
+/* https://levelup.gitconnected.com/understanding-react-higher-order-components-by-example-95e8c47c8006 */
+
 /* A higher-order component can fall into one or both of these categories, as will be demonstrated in the coming examples.
 Note that the examples in this article do not demonstrate best practices, such as adding a display name and hoisting statics; the main aim of this article is to show how HOCs can be typed effectively.
 Enhancers
