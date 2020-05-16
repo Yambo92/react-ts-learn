@@ -3,7 +3,15 @@ import { NavLink, RouteComponentProps, withRouter } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
 import 'url-search-params-polyfill'
 
-const Header: React.SFC<RouteComponentProps> = (props) => {
+import BasketSummary from '../BasketSummary/BasketSummary'
+import { connect } from 'react-redux'
+import { IApplicationState } from '../../reducers/Store'
+
+interface IProps extends RouteComponentProps {
+  basketCount: number
+}
+
+const Header: React.SFC<IProps> = (props) => {
   const [search, setSearch] = React.useState('')
 
   React.useEffect(() => {
@@ -32,6 +40,7 @@ const Header: React.SFC<RouteComponentProps> = (props) => {
           onChange={handleSearchChange}
           onKeyDown={handleSearchKeyDown}
         />
+        <BasketSummary count={props.basketCount} />
       </div>
       <img src={logo} className="header-logo" alt="logo" />
       <h1 className="header-title">React Shop</h1>
@@ -50,4 +59,10 @@ const Header: React.SFC<RouteComponentProps> = (props) => {
   )
 }
 
-export default withRouter(Header)
+const mapStateToProps = (store: IApplicationState) => {
+  return {
+    basketCount: store.basket.products.length,
+  }
+}
+
+export default connect(mapStateToProps)(withRouter(Header))

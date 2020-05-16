@@ -1,8 +1,10 @@
 import { Reducer } from 'redux'
 import { IProductsState, ProductsActions, ProductsActionTypes } from './ProductsTypes'
+import { act } from 'react-dom/test-utils'
 
 const initialProductState: IProductsState = {
   products: [],
+  currentProduct: null,
   productsLoading: false,
 }
 
@@ -21,6 +23,13 @@ export const productsReducer: Reducer<IProductsState, ProductsActions> = (
       return {
         ...state,
         products: action.products,
+        productsLoading: false,
+      }
+    }
+    case ProductsActionTypes.GETSINGLE: {
+      return {
+        ...state,
+        currentProduct: action.product,
         productsLoading: false,
       }
     }
